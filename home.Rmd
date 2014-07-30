@@ -1,0 +1,64 @@
+
+---
+title: "Leishmaniose no Nordeste de São Paulo"
+output: html_document
+---
+
+<br><br>
+
+---
+
+<br>
+
+#Informações Gerais
+
+Aqui serão passadas algumas informaões da Leishmaniose Tegumentar e sua distribuição no Nordeste do Estado de São Paulo. Todas as informações geradas aqui utilizaram dados que foram coletados, curados manualmente e podem ser encontradas neste [arquivo]("./dados/LTA.csv"). O arquivo se encontra na extensão ``.csv`` para facilitar leitura e reprodução dos resultados. Os scripts desenvolvidos em ``R`` para o processamento do conjunto de dados e produção de gráficos pode ser encontrado [aqui]("./codigo/").
+
+
+```{r carrega_dados, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+        source("./codigo/carregaDados.R")
+```
+
+Vamos iniciar realizando uma breve análise dos dados brutos coletados dos pacientes.
+
+```{r pega_dados_brutos, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE}
+        dadosBrutos <- read.csv("./dados/LTA.csv")
+        dados <- data.frame(dadosBrutos$forma_clinica, dadosBrutos$ano_diagnostico, dadosBrutos$idade, dadosBrutos$sexo, dadosBrutos$moradia, dadosBrutos$prof, dadosBrutos$rio, dadosBrutos$procedencia1, dadosBrutos$estado1, dadosBrutos$procedencia2, dadosBrutos$estado2, dadosBrutos$lat, dadosBrutos$lon, dadosBrutos$end)
+        colnames(dados) <- c("Forma Clinica", "Ano do Diagnostico", "Idade", "Sexo", "Tipo de Moradia", "Profissao", "Rio (Nome)", "Cidade de Procedencia (1)", "Estado de Procedencia (1)", "Cidade de Procedencia (2)", "Estado de Procedencia (2)", "Latitude", "Longitude", "Endereco")
+```
+
+```{r resumo_dados,echo=FALSE}
+        summary(dados)
+```
+
+Com essa simples tabela podemos ver as principais características de nossos dados. Notamos que nosso banco de dados é caracterizado em sua mariora por homens adultos que em sua maiora foram diagnosticados com LTA-c. Também notamos que não há uma predominância exacerbada de pessoas diagnosticadas que residem em zona rural. Contudo, grande parte dessas pessoas trabalham em zona rural, sendo a profissão que mais predomina é a de lavrador. O Rio Pardo se destaca, tendo sido visitado por vários candidatos antes de serem diagnosticados com LTA, dessa forma, tornando-se um ponto de interesse para futuras observações. Antes de avançarmos gostaria que fosse dado atenção especial para o número de registros que não foram georreferenciados com sucesso. Atribuimos isso a erros durante o processo de geração dos dados e coleta. Esse tipo de erro é comum e é retratado na literatura por vários autores. Por isso, devemos ressaltar que para o sucesso deste tipo projeto a coleta e limpeza de dados desempenha um papel de enorme importância para o sucesso e qualidade das demais etapas. 
+
+---
+#Análise da Distribuição da Leishimaniose no Espaço e Tempo
+
+Notamos que LTA-c vem a ser a forma mais comum de LTA apresentada, sendo acompanhanda pela LTA-m. No gráfico a seguir vemos que o pico de casos de LTA ocorre em 2002, sendo causado principalmente pelo aumento de casos LTA-c.
+
+```{r histograma_tempo, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE}
+        source("./codigo/histTempo.R")
+```
+
+Para uma análise mais detalhada da distribuição da LTA durante esses trinta anos utilizaremos a figura abaixo. Ela mostra (da direita para esquerda) a distribuição geográfica da LTA durante essas 3 décadas (1980-1990, 1990-2000, 2000-2013) respectivamente. Podemos ver claramente por meio desse gráfico que de fato há um pico de casos de LTA no nordeste de São Paulo durante a terceira década. Ao olharmos para o mapa fica claro o desenvolvimento que essa doença vem demonstrando no nordeste do estado.
+
+```{r distribuicao_decadas, echo=FALSE, results='hide', message=FALSE, warning=FALSE, cache=TRUE}
+        source("./codigo/distrDec.R")
+```
+
+Por fim nós mostramos um mapa demonstrando as zonas de maior ocorrencia de casos nas últimas 3 décadas. Para isso foram usados todos os registros do banco de dados.
+
+<div class="container">
+<iframe style="height: 300px; width: 100%; margin: 0px; padding: 0px" src="./heatmapTLA.html"></iframe>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
